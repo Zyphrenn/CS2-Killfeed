@@ -48,3 +48,13 @@ A very small Node.js app that plays custom sounds when you get a kill or die in 
 - Navigate to `game/csgo/cfg/`
 - Move the `gamestate_integration_killfeed.cfg` file into this directory
 - Save the file and restart CS2.
+
+---
+
+## Disclaimer
+
+This project uses CS2's official Game State Integration system and **does not modify the game, inject code, or interact with VAC-protected memory in any way.**
+
+However, external programs (like audio players or scripts) may unintentionally trigger VAC-related warnings if misconfigured.
+
+**By using this program, you acknowledge that you do so at your own risk. I am not responsible for any bans, timeouts, or account issues that may arise.**
