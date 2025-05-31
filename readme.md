@@ -2,7 +2,7 @@
 
 A very small Node.js app that plays custom sounds when you get a kill or die in **Counter-Strike 2**, using Game State Integration (GSI).
 
-![CS2 KillFeed](https://img.shields.io/badge/CS2-Kill%2FDeath%20Sound%20Notifier-blue?style=flat-square)
+![CS2 KillFeed](https://img.shields.io/badge/CS2-Kill/Death_Sound_Notifier-blue)
 
 ## Features
 
@@ -42,10 +42,9 @@ A very small Node.js app that plays custom sounds when you get a kill or die in 
 ---
 
 ## Game State Integration Setup (CS2)
-
-1. Move the `gamestate_integration_killfeed.cfg` file into your installition folder:
-```
-Counter-Strike Global Offensive\game\csgo\cfg
-```
-
-3. Save the file and restart CS2.
+- Open CS2's installation folder:
+- Navigate to CS2 in Steam
+- Right click Counter-Strike 2 - choose "Manage" - "Browse local files".
+- Navigate to `game/csgo/cfg/`
+- Move the `gamestate_integration_killfeed.cfg` file into this directory
+- Save the file and restart CS2.
