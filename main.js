@@ -5,12 +5,12 @@ const port = 3384;
 
 app.use(express.json());
 
-// config
-const VOLUME = 0.8;
-const DELAY_BETWEEN_SOUNDS = 400;
+const config = require('./config.json');
 
-const KILL_SOUND = 'sounds/kill.mp3';
-const DEATH_SOUND = 'sounds/death.mp3';
+const VOLUME = config.volume || 0.8;
+const DELAY_BETWEEN_SOUNDS = config.delayBetweenSounds || 400;
+const KILL_SOUND = config.killSound[0];
+const DEATH_SOUND = config.deathSound[0];
 
 let lastRoundKills = 0;
 let soundQueue = [];
