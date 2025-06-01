@@ -36,8 +36,8 @@ A very small Node.js app that plays custom sounds when you get a kill or die in 
 
 3. **Add your sounds:**  
    Place your `.mp3` files in the `sounds/` folder:  
-   - `kill.mp3` for kills  
-   - `death.mp3` for deaths  
+   - `kill_.mp3` for kills
+   - `death_.mp3` for deaths
 
 ---
 

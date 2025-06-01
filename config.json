@@ -1,6 +1,8 @@
 {
     "volume": 0.8,
     "delayBetweenSounds": 400,
-    "killSound": ["sounds/kill.mp3"],
-    "deathSound": ["sounds/death.mp3"]
+    "killPrefix": "kill_",
+    "deathPrefix": "death_",
+    "soundsFolder": "sounds",
+    "noRepeat": true
 }

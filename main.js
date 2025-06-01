@@ -1,5 +1,7 @@
 const express = require('express');
 const { spawn } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 const app = express();
 const port = 3384;
 
@@ -9,12 +11,33 @@ const config = require('./config.json');
 
 const VOLUME = config.volume || 0.8;
 const DELAY_BETWEEN_SOUNDS = config.delayBetweenSounds || 400;
-const KILL_SOUND = config.killSound[0];
-const DEATH_SOUND = config.deathSound[0];
+const KILL_PREFIX = config.killPrefix || 'kill_';
+const DEATH_PREFIX = config.deathPrefix || 'death_';
+const NO_REPEAT = config.noRepeat || false;
 
 let lastRoundKills = 0;
 let soundQueue = [];
 let isPlaying = false;
+let lastSoundPlayed = null;
+
+function getRandomSound(prefix) {
+  const files = fs.readdirSync(config.soundsFolder);
+  const matching = files.filter(f => f.startsWith(prefix));
+
+  if (matching.length === 0) return null;
+
+  let selected;
+  if (NO_REPEAT && matching.length > 1) {
+    const filtered = matching.filter(f => path.join(config.soundsFolder, f) !== lastSoundPlayed);
+    selected = filtered.length > 0
+      ? filtered[Math.floor(Math.random() * filtered.length)]
+      : matching[Math.floor(Math.random() * matching.length)];
+  } else {
+    selected = matching[Math.floor(Math.random() * matching.length)];
+  }
+
+  return path.join(config.soundsFolder, selected);
+}
 
 function playNextSound() {
   if (soundQueue.length === 0) {
@@ -24,6 +47,7 @@ function playNextSound() {
 
   isPlaying = true;
   const sound = soundQueue.shift();
+  lastSoundPlayed = sound;
 
   const ffplay = spawn('ffplay', [
     '-nodisp',
@@ -54,11 +78,11 @@ app.post('/', (req, res) => {
       console.log(`🟢 you got a kill`);
 
       for (let i = 0; i < gained; i++) {
-        soundQueue.push(KILL_SOUND);
+        const sound = getRandomSound(KILL_PREFIX);
+        if (sound) soundQueue.push(sound);
       }
 
       lastRoundKills = playerState.round_kills;
-
       if (!isPlaying) playNextSound();
     } else if (playerState.round_kills < lastRoundKills) {
       // probably new round
@@ -73,7 +97,8 @@ app.post('/', (req, res) => {
 
     if (wasAliveBefore && isDeadNow) {
       console.log(`🔴 you died`);
-      soundQueue.push(DEATH_SOUND);
+      const sound = getRandomSound(DEATH_PREFIX);
+      if (sound) soundQueue.push(sound);
       if (!isPlaying) playNextSound();
     }
   }
