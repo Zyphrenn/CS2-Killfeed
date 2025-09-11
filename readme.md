@@ -55,6 +55,6 @@ A very small Node.js app that plays custom sounds when you get a kill or die in 
 
 This project uses CS2's official Game State Integration system and **does not modify the game, inject code, or interact with VAC-protected memory in any way.**
 
-However, external programs (like audio players or scripts) may unintentionally trigger VAC-related warnings if misconfigured.
+However, it may unintentionally trigger VAC-related warnings if misconfigured. I would recomend against using in competitive matches.
 
-**By using this program, you acknowledge that you do so at your own risk. I am not responsible for any bans, timeouts, or account issues that may arise.**
+**I am not responsible for any bans, timeouts, or account issues you may have.**
