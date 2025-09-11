@@ -75,7 +75,7 @@ app.post('/', (req, res) => {
   if (playerState && typeof playerState.round_kills === 'number') {
     if (playerState.round_kills > lastRoundKills) {
       const gained = playerState.round_kills - lastRoundKills;
-      console.log(`🟢 you got a kill`);
+      console.log(`you got a kill`);
 
       for (let i = 0; i < gained; i++) {
         const sound = getRandomSound(KILL_PREFIX);
@@ -85,7 +85,6 @@ app.post('/', (req, res) => {
       lastRoundKills = playerState.round_kills;
       if (!isPlaying) playNextSound();
     } else if (playerState.round_kills < lastRoundKills) {
-      // probably new round
       lastRoundKills = playerState.round_kills;
     }
   }
@@ -96,7 +95,7 @@ app.post('/', (req, res) => {
     const isDeadNow = playerState.health === 0;
 
     if (wasAliveBefore && isDeadNow) {
-      console.log(`🔴 you died`);
+      console.log(`you died`);
       const sound = getRandomSound(DEATH_PREFIX);
       if (sound) soundQueue.push(sound);
       if (!isPlaying) playNextSound();
