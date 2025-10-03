@@ -73,7 +73,7 @@ app.post('/', (req, res) => {
 
     if (!payload.player || !payload.player.state) {
         if (!initialized) {
-            console.log("Waiting for player state... (if this doesn't finish, try restart the script)");
+            console.log("Waiting for player state... (if this doesn't finish, try restarting the script)");
         }
         return res.sendStatus(200);
     }
