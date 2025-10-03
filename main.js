@@ -16,6 +16,7 @@ const DEATH_PREFIX = config.deathPrefix || 'death_';
 const NO_REPEAT = config.noRepeat || false;
 
 let initialized = false;
+let steamId = null;
 let lastRoundKills = 0;
 let soundQueue = [];
 let isPlaying = false;
@@ -72,13 +73,23 @@ app.post('/', (req, res) => {
 
     if (!payload.player || !payload.player.state) {
         if (!initialized) {
-            console.log("Waiting for player state...");
+            console.log("Waiting for player state... (if this doesn't finish, try restart the script)");
         }
         return res.sendStatus(200);
     }
 
+    const player = payload?.player;
     const playerState = payload?.player?.state;
     const previousState = payload?.previously?.player?.state;
+    
+    if (!steamId && player?.steamid) {
+        steamId = player.steamid;
+        console.log("Tracking player:", steamId);
+    }
+
+    if (player?.steamid !== steamId) {
+        return res.sendStatus(200);
+    }
 
     if (!initialized) {
         lastRoundKills = playerState.round_kills || 0;
