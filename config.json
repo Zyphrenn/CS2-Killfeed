@@ -1,5 +1,5 @@
 {
-    "volume": 0.8,
+    "volume": 0.3,
     "delayBetweenSounds": 400,
     "killPrefix": "kill_",
     "deathPrefix": "death_",
