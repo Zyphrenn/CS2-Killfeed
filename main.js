@@ -15,6 +15,7 @@ const KILL_PREFIX = config.killPrefix || 'kill_';
 const DEATH_PREFIX = config.deathPrefix || 'death_';
 const NO_REPEAT = config.noRepeat || false;
 
+let initialized = false;
 let lastRoundKills = 0;
 let soundQueue = [];
 let isPlaying = false;
@@ -68,8 +69,22 @@ function playNextSound() {
 
 app.post('/', (req, res) => {
     const payload = req.body;
+
+    if (!payload.player || !payload.player.state) {
+        if (!initialized) {
+            console.log("Waiting for player state...");
+        }
+        return res.sendStatus(200);
+    }
+
     const playerState = payload?.player?.state;
     const previousState = payload?.previously?.player?.state;
+
+    if (!initialized) {
+        lastRoundKills = playerState.round_kills || 0;
+        initialized = true;
+        console.log("Player state initialized:", lastRoundKills);
+    }
 
     // kill detection
     if (playerState && typeof playerState.round_kills === 'number') {
