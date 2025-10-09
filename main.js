@@ -94,7 +94,7 @@ app.post('/', (req, res) => {
     if (!initialized) {
         lastRoundKills = playerState.round_kills || 0;
         initialized = true;
-        console.log("Player state initialized:", lastRoundKills);
+        console.log("Player state initialized");
     }
 
     // kill detection
