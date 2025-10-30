@@ -22,6 +22,8 @@ let soundQueue = [];
 let isPlaying = false;
 let lastSoundPlayed = null;
 
+let mapName = null;
+
 function getRandomSound(prefix) {
     const files = fs.readdirSync(config.soundsFolder);
     const matching = files.filter(f => f.startsWith(prefix));
@@ -80,6 +82,7 @@ app.post('/', (req, res) => {
 
     const player = payload?.player;
     const playerState = payload?.player?.state;
+    const map = payload?.map;
     const previousState = payload?.previously?.player?.state;
     
     if (!steamId && player?.steamid) {
@@ -125,6 +128,13 @@ app.post('/', (req, res) => {
             const sound = getRandomSound(DEATH_PREFIX);
             if (sound) soundQueue.push(sound);
             if (!isPlaying) playNextSound();
+        }
+    }
+
+    if (map && typeof map.name === 'string') {
+        if (map.name !== mapName) {
+            mapName = map.name;
+            console.log(`Current map: ${mapName}`);
         }
     }
 
